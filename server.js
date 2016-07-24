@@ -5,6 +5,7 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
 var CONTACTS_COLLECTION = "contacts";
+var RESTAURANTS_COLLECTION = "restaurants";
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
@@ -116,6 +117,23 @@ app.delete("/contacts/:id", function(req, res) {
       handleError(res, err.message, "Failed to delete contact");
     } else {
       res.status(204).end();
+    }
+  });
+});
+
+// RESTAURANT API ROUTES BELOW
+
+/*  "/restaurants"
+ *    GET: finds all contacts
+ *    POST: creates a new contact
+ */
+
+app.get("/restaurants", function(req, res) {
+  db.collection(RESTAURANTS_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get restaurants.");
+    } else {
+      res.status(200).json(docs);
     }
   });
 });

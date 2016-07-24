@@ -22,7 +22,7 @@ angular.module("contactsApp", ['ngRoute'])
                 templateUrl: "contact.html"
             })
             .otherwise({
-                redirectTo: "/"
+                redirectTo: "/contacts"
             })
     })
     .service("Contacts", function($http) {
