@@ -117,3 +117,30 @@ angular.module("contactsApp", ['ngRoute'])
             Contacts.deleteContact(contactId);
         }
     });
+
+angular.module("restaurantsApp", ['ngRoute'])
+  .config(function($routeProvider) {
+    $routeProvider
+      .when("/restaurants", {
+        templateUrl: "rList.html",
+        controller: "ListController",
+        resolve: {
+          restaurants: function(Restaurants) {
+              return Restaurants.getRestaurants();
+          }
+        }
+      })
+  })
+  .service("Restaurants", function($http) {
+    this.getRestaurants = function() {
+      return $http.get("/restaurants").
+        then(function(response) {
+            return response;
+        }, function(response) {
+            alert("Error retrieving restaurants.");
+        });
+    }
+  })
+  .controller("ListController", function(restaurants, $scope) {
+    $scope.restaurants = restaurants.data;
+  });

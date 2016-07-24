@@ -124,8 +124,8 @@ app.delete("/contacts/:id", function(req, res) {
 // RESTAURANT API ROUTES BELOW
 
 /*  "/restaurants"
- *    GET: finds all contacts
- *    POST: creates a new contact
+ *    GET: finds all restaurants
+ *    POST: creates a new restaurant
  */
 
 app.get("/restaurants", function(req, res) {
