@@ -154,7 +154,7 @@ angular.module("contactsApp", ['ngRoute'])
     })
     .controller("EditRestaurantController", function($scope, $routeParams, Restaurants) {
         Restaurants.getRestaurant($routeParams.restId).then(function(doc) {
-            $scope.restaurant = doc.data;
+            $scope.rest = doc.data;
         }, function(response) {
             alert(response);
         });
