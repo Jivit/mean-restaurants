@@ -17,7 +17,7 @@
     <tbody>
       <tr ng-repeat="rest in restaurants | orderBy:'name'" style="cursor:pointer">
         <td>
-          <a ng-href="#/restaurant/{{rest._id}}">{{ rest.name }} -- {{ rest.borough }}</a>
+          <a ng-href="#/restaurant/{{rest._id}}">{{ rest.name }} - {{ rest.borough }}</a>
         </td>
       </tr>
     </tbody>

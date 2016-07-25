@@ -1,7 +1,7 @@
 <div class = "row">
   <div class="col-md-6">
     <h2>
-      {{ rest.name }} -- {{ rest.borough }}
+      {{ rest.name }} - {{ rest.borough }}
     </h2>
   </div>
   <div class="col-md-3">
@@ -14,11 +14,15 @@
 </div>
 <div ng-hide="editMode" class="container">
   <div>
-    <p ng-if="rest.address">address: {{ rest.address }}</p>
-    <p ng-if="contact.phone.mobile">phone (m): {{ contact.phone.mobile }} </p>
-    <p ng-if="contact.phone.work">phone (w): {{ contact.phone.work }} </p>
-    <p ng-if="contact.address"> address: {{ contact.address }} </p>
-    <p ng-if="contact.twitter"> twitter: <a ng-href="https://twitter.com/{{ contact.twitter }}" target="_blank">@{{ contact.twitter }}</a></p>
+    <p ng-if="rest.address">Address: {{ rest.address.building }} {{ rest.address.street }}, {{ rest.address.zipcode }}</p>
+    <p ng-if="rest.cuisine">Cuisine: {{ rest.cuisine }} </p>
+    <p ng-if="rest.grades">
+      <ul ng-repeat="grade in rest.grades | orderBy:'date'">
+        <li>
+          Grade: {{ grade.grade }} Score: {{ grade.score }}
+        </li>
+      </ul>
+    </p>
     <p>
       <button style="margin-top:20px" class="btn btn-default" ng-click="">Edit</button>
       <a style="margin-top:20px" class="btn btn-default" href="#/restaurants">Back</a>
