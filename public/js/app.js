@@ -21,8 +21,17 @@ angular.module("contactsApp", ['ngRoute'])
                 controller: "EditContactController",
                 templateUrl: "contact.html"
             })
+            .when("/restaurants", {
+                templateUrl: "rList.html",
+                controller: "rListController",
+                resolve: {
+                  restaurants: function(Restaurants) {
+                      return Restaurants.getRestaurants();
+                  }
+                }
+              })
             .otherwise({
-                redirectTo: "/contacts"
+                redirectTo: "/"
             })
     })
     .service("Contacts", function($http) {
@@ -73,6 +82,16 @@ angular.module("contactsApp", ['ngRoute'])
                 });
         }
     })
+    .service("Restaurants", function($http) {
+        this.getRestaurants = function() {
+          return $http.get("/restaurants").
+            then(function(response) {
+                return response;
+            }, function(response) {
+                alert("Error retrieving restaurants.");
+            });
+        }
+      })
     .controller("ListController", function(contacts, $scope) {
         $scope.contacts = contacts.data;
     })
@@ -116,31 +135,7 @@ angular.module("contactsApp", ['ngRoute'])
         $scope.deleteContact = function(contactId) {
             Contacts.deleteContact(contactId);
         }
-    });
-
-angular.module("restaurantsApp", ['ngRoute'])
-  .config(function($routeProvider) {
-    $routeProvider
-      .when("/restaurants", {
-        templateUrl: "rList.html",
-        controller: "ListController",
-        resolve: {
-          restaurants: function(Restaurants) {
-              return Restaurants.getRestaurants();
-          }
-        }
-      })
-  })
-  .service("Restaurants", function($http) {
-    this.getRestaurants = function() {
-      return $http.get("/restaurants").
-        then(function(response) {
-            return response;
-        }, function(response) {
-            alert("Error retrieving restaurants.");
-        });
-    }
-  })
-  .controller("ListController", function(restaurants, $scope) {
-    $scope.restaurants = restaurants.data;
-  });
+    })
+    .controller("rListController", function(restaurants, $scope) {
+        $scope.restaurants = restaurants.data;
+    });;
