@@ -95,7 +95,7 @@ angular.module("contactsApp", ['ngRoute'])
                 alert("Error retrieving restaurants.");
             });
         }
-        this.getRestaurant = function(resttId) {
+        this.getRestaurant = function(restId) {
             var url = "/restaurants/" + restId;
             return $http.get(url).
                 then(function(response) {
@@ -153,7 +153,7 @@ angular.module("contactsApp", ['ngRoute'])
         $scope.restaurants = restaurants.data;
     })
     .controller("EditRestaurantController", function($scope, $routeParams, Restaurants) {
-        Restaurants.getRestaurant($routeParams.restaurantId).then(function(doc) {
+        Restaurants.getRestaurant($routeParams.restId).then(function(doc) {
             $scope.rest = doc.data;
         }, function(response) {
             alert(response);
