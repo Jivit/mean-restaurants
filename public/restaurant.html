@@ -17,9 +17,9 @@
     <p ng-if="rest.address">Address: {{ rest.address.building }} {{ rest.address.street }}, {{ rest.address.zipcode }}</p>
     <p ng-if="rest.cuisine">Cuisine: {{ rest.cuisine }} </p>
     <p ng-if="rest.grades">
-      <ul ng-repeat="grade in rest.grades | orderBy:'date'">
+      <ul ng-repeat="grade in rest.grades">
         <li>
-          Grade: {{ grade.grade }} Score: {{ grade.score }}
+          Grade: {{ grade.grade }} Score: {{ grade.score }} on {{ grade.date }}
         </li>
       </ul>
     </p>
