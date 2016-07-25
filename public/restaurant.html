@@ -19,7 +19,7 @@
     <p ng-if="rest.grades">
       <ul ng-repeat="grade in rest.grades">
         <li>
-          Grade: {{ grade.grade }} Score: {{ grade.score }} on {{ grade.date }}
+          Grade: {{ grade.grade }} Score: {{ grade.score }} on {{ grade.date | date:'longDate'}}
         </li>
       </ul>
     </p>
