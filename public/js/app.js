@@ -29,7 +29,11 @@ angular.module("contactsApp", ['ngRoute'])
                       return Restaurants.getRestaurants();
                   }
                 }
-              })
+            })
+            .when("/restaurant/:restId", {
+                controller: "EditRestaurantController",
+                templateUrl: "restaurant.html"
+            })
             .otherwise({
                 redirectTo: "/"
             })
@@ -91,6 +95,15 @@ angular.module("contactsApp", ['ngRoute'])
                 alert("Error retrieving restaurants.");
             });
         }
+        this.getRestaurant = function(resttId) {
+            var url = "/restaurants/" + restId;
+            return $http.get(url).
+                then(function(response) {
+                    return response;
+                }, function(response) {
+                    alert("Error finding this restaurant.");
+                });
+        }
       })
     .controller("ListController", function(contacts, $scope) {
         $scope.contacts = contacts.data;
@@ -138,4 +151,31 @@ angular.module("contactsApp", ['ngRoute'])
     })
     .controller("rListController", function(restaurants, $scope) {
         $scope.restaurants = restaurants.data;
-    });;
+    })
+    .controller("EditRestaurantController", function($scope, $routeParams, Restaurants) {
+        Restaurants.getRestaurant($routeParams.restId).then(function(doc) {
+            $scope.restaurant = doc.data;
+        }, function(response) {
+            alert(response);
+        });
+
+        // $scope.toggleEdit = function() {
+        //     $scope.editMode = true;
+        //     $scope.contactFormUrl = "contact-form.html";
+        // }
+
+        // $scope.back = function() {
+        //     $scope.editMode = false;
+        //     $scope.contactFormUrl = "";
+        // }
+
+        // $scope.saveContact = function(contact) {
+        //     Contacts.editContact(contact);
+        //     $scope.editMode = false;
+        //     $scope.contactFormUrl = "";
+        // }
+
+        // $scope.deleteContact = function(contactId) {
+        //     Contacts.deleteContact(contactId);
+        // }
+    });

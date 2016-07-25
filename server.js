@@ -137,3 +137,19 @@ app.get("/restaurants", function(req, res) {
     }
   });
 });
+
+/*  "/restaurants/:id"
+ *    GET: find restaurant by id
+ *    PUT: update restaurant by id
+ *    DELETE: deletes restaurant by id
+ */
+
+app.get("/restaurants/:id", function(req, res) {
+  db.collection(RESTAURANTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get restaurant.");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
