@@ -11,18 +11,12 @@ var app = express();
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
-// app.set('port', (process.env.PORT || 5000));
-
-// app.get('/', function(request, response) {
-//   response.render('index');
-// });
-
-// app.listen(app.get('port'), function() {
-//   console.log('Node app is running on port', app.get('port'));
-// });
-
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
+
+if(!process.env.MONGODB_URI) {
+  process.env.MONGODB_URI = 'mongodb://localhost:27017/local';
+}
 
 // Connect to the database before starting the application server.
 mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
