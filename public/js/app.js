@@ -30,6 +30,10 @@ angular.module("contactsApp", ['ngRoute'])
                   }
                 }
             })
+            .when("/new/restaurant", {
+                controller: "NewRestaurantController",
+                templateUrl: "restaurant-form.html"
+            })
             .when("/restaurant/:restId", {
                 controller: "EditRestaurantController",
                 templateUrl: "restaurant.html"
@@ -86,25 +90,6 @@ angular.module("contactsApp", ['ngRoute'])
                 });
         }
     })
-    .service("Restaurants", function($http) {
-        this.getRestaurants = function() {
-          return $http.get("/restaurants").
-            then(function(response) {
-                return response;
-            }, function(response) {
-                alert("Error retrieving restaurants.");
-            });
-        }
-        this.getRestaurant = function(restId) {
-            var url = "/restaurants/" + restId;
-            return $http.get(url).
-                then(function(response) {
-                    return response;
-                }, function(response) {
-                    alert("Error finding this restaurant.");
-                });
-        }
-      })
     .controller("ListController", function(contacts, $scope) {
         $scope.contacts = contacts.data;
     })
@@ -149,8 +134,70 @@ angular.module("contactsApp", ['ngRoute'])
             Contacts.deleteContact(contactId);
         }
     })
+    .service("Restaurants", function($http) {
+        this.getRestaurants = function() {
+          return $http.get("/restaurants").
+            then(function(response) {
+                return response;
+            }, function(response) {
+                alert("Error retrieving restaurants.");
+            });
+        }
+        this.createRestaurant = function(rest) {
+            return $http.post("/restaurants", rest).
+                then(function(response) {
+                    return response;
+                }, function(response) {
+                    alert("Error creating restaurant.");
+                });
+        }
+        this.getRestaurant = function(restId) {
+            var url = "/restaurants/" + restId;
+            return $http.get(url).
+                then(function(response) {
+                    return response;
+                }, function(response) {
+                    alert("Error finding this restaurant.");
+                });
+        }
+        this.editRestaurant = function(rest) {
+            var url = "/restaurants/" + rest._id;
+            console.log(rest._id);
+            return $http.put(url, rest).
+                then(function(response) {
+                    return response;
+                }, function(response) {
+                    alert("Error editing this restaurant.");
+                    console.log(response);
+                });
+        }
+        this.deleteRestaurant = function(restId) {
+            var url = "/restaurants/" + restId;
+            return $http.delete(url).
+                then(function(response) {
+                    return response;
+                }, function(response) {
+                    alert("Error deleting this restaurant.");
+                    console.log(response);
+                });
+        }
+    })
     .controller("rListController", function(restaurants, $scope) {
         $scope.restaurants = restaurants.data;
+    })
+    .controller("NewRestaurantController", function($scope, $location, Restaurants) {
+        $scope.back = function() {
+            $location.path("#/");
+        }
+
+        $scope.saveRestaurant = function(rest) {
+            Restaurants.createRestaurant(rest).then(function(doc) {
+                var restUrl = "/restaurant/" + doc.data._id;
+                $location.path(restUrl);
+            }, function(response) {
+                alert(response);
+            });
+        }
     })
     .controller("EditRestaurantController", function($scope, $routeParams, Restaurants) {
         Restaurants.getRestaurant($routeParams.restId).then(function(doc) {
@@ -159,23 +206,25 @@ angular.module("contactsApp", ['ngRoute'])
             alert(response);
         });
 
-        // $scope.toggleEdit = function() {
-        //     $scope.editMode = true;
-        //     $scope.contactFormUrl = "contact-form.html";
-        // }
+        $scope.toggleEdit = function() {
+            $scope.editMode = true;
+            $scope.restFormUrl = "restaurant-form.html";
+        }
 
-        // $scope.back = function() {
-        //     $scope.editMode = false;
-        //     $scope.contactFormUrl = "";
-        // }
+        $scope.back = function() {
+            $scope.editMode = false;
+            $scope.restFormUrl = "";
+        }
 
-        // $scope.saveContact = function(contact) {
-        //     Contacts.editContact(contact);
-        //     $scope.editMode = false;
-        //     $scope.contactFormUrl = "";
-        // }
+        $scope.saveRestaurant = function(rest) {
+            alert("Restaurant updated!");
+            Restaurants.editRestaurant(rest);
+            $scope.editMode = false;
+            $scope.restFormUrl = "";
+        }
 
-        // $scope.deleteContact = function(contactId) {
-        //     Contacts.deleteContact(contactId);
-        // }
+        $scope.deleteRestaurant = function(restId) {
+            alert("Restaurant deleted!");
+            Restaurants.deleteRestaurant(restId);
+        }
     });

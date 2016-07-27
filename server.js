@@ -48,7 +48,6 @@ function handleError(res, reason, message, code) {
  *    GET: finds all contacts
  *    POST: creates a new contact
  */
-
 app.get("/contacts", function(req, res) {
   db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
@@ -81,7 +80,6 @@ app.post("/contacts", function(req, res) {
  *    PUT: update contact by id
  *    DELETE: deletes contact by id
  */
-
 app.get("/contacts/:id", function(req, res) {
   db.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
@@ -121,7 +119,6 @@ app.delete("/contacts/:id", function(req, res) {
  *    GET: finds all restaurants
  *    POST: creates a new restaurant
  */
-
 app.get("/restaurants", function(req, res) {
   db.collection(RESTAURANTS_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
@@ -132,12 +129,28 @@ app.get("/restaurants", function(req, res) {
   });
 });
 
+app.post("/restaurants", function(req, res) {
+  var newRestaurant = req.body;
+  newRestaurant.createDate = new Date();
+
+  if (!(req.body.name)) {
+    handleError(res, "Invalid user input", "Must provide a name.", 400);
+  }
+
+  db.collection(RESTAURANTS_COLLECTION).insertOne(newRestaurant, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new restaurant.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
 /*  "/restaurants/:id"
  *    GET: find restaurant by id
  *    PUT: update restaurant by id
  *    DELETE: deletes restaurant by id
  */
-
 app.get("/restaurants/:id", function(req, res) {
   db.collection(RESTAURANTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
@@ -147,3 +160,27 @@ app.get("/restaurants/:id", function(req, res) {
     }
   });
 });
+
+app.put("/restaurants/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(RESTAURANTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update restaurant.");
+    } else {
+      res.status(204).end();
+    }
+  });
+});
+
+app.delete("/restaurants/:id", function(req, res) {
+  db.collection(RESTAURANTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete restaurant");
+    } else {
+      res.status(204).end();
+    }
+  });
+});
+
