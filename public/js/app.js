@@ -199,7 +199,7 @@ angular.module("contactsApp", ['ngRoute'])
             });
         }
     })
-    .controller("EditRestaurantController", function($scope, $routeParams, Restaurants) {
+    .controller("EditRestaurantController", function($scope, $routeParams, $location, Restaurants) {
         Restaurants.getRestaurant($routeParams.restId).then(function(doc) {
             $scope.rest = doc.data;
         }, function(response) {
@@ -227,6 +227,10 @@ angular.module("contactsApp", ['ngRoute'])
             var res = confirm("Are you sure you want to delete this restaurant?");
             if (res) {
                 Restaurants.deleteRestaurant(restId);
+                $location.path("/restaurants");
+            }
+            else {
+                $location.path("/restaurant/" + restId);
             }
         }
     });
