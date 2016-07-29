@@ -225,7 +225,7 @@ angular.module("contactsApp", ['ngRoute'])
 
         $scope.deleteRestaurant = function(restId) {
             var res = confirm("Are you sure you want to delete this restaurant?");
-            if(res) {
+            if (res) {
                 Restaurants.deleteRestaurant(restId);
             }
         }
