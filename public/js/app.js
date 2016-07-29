@@ -224,7 +224,9 @@ angular.module("contactsApp", ['ngRoute'])
         }
 
         $scope.deleteRestaurant = function(restId) {
-            alert("Restaurant deleted!");
-            Restaurants.deleteRestaurant(restId);
+            var res = confirm("Are you sure you want to delete this restaurant?");
+            if(res) {
+                Restaurants.deleteRestaurant(restId);
+            }
         }
     });
