@@ -187,7 +187,7 @@ angular.module("contactsApp", ['ngRoute'])
     })
     .controller("NewRestaurantController", function($scope, $location, Restaurants) {
         $scope.back = function() {
-            $location.path("#/");
+            $location.path("/restaurants");
         }
 
         $scope.saveRestaurant = function(rest) {

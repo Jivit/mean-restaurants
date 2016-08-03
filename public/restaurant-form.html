@@ -5,29 +5,41 @@
 </div>
 <div class="container">
   <div>
-    <p>
-      <label>Name</label> 
-      <input id="name" class="form-control" type="text" ng-model="rest.name" required> 
-    </p>
-    <p>
-      <label>Building Number</label> 
-      <input id="name" class="form-control" type="text" ng-model="rest.address.building" required>
-      <label>Street</label> 
-      <input id="name" class="form-control" type="text" ng-model="rest.address.street" required>
-      <label>Zipcode</label> 
-      <input id="name" class="form-control" type="text" ng-model="rest.address.zipcode" required>
-    </p>
-    <p>
-      <label>Borough</label> 
-      <input id="name" class="form-control" type="text" ng-model="rest.borough" required> 
-    </p>
-    <p>
-      <label>Cuisine</label> 
-      <input id="name" class="form-control" type="text" ng-model="rest.cuisine" required> 
-    </p>
-    <p>
-      <button style="margin-top:20px" class="btn btn-default" ng-click="saveRestaurant(rest)">Save</button>
-      <button style="margin-top:20px" class="btn btn-default" ng-click="back()">Back</button>
-    </p>
+      <form name="rForm">
+        <p>
+          <label>Name</label> 
+          <input name="name" id="name" class="form-control" type="text" ng-model="rest.name" required>
+          <span ng-show="rForm.name.$touched && rForm.name.$invalid">The name is required.</span>
+        </p>
+        <p>
+          <label>Building Number</label> 
+          <input name="building" id="building" class="form-control" type="number" ng-model="rest.address.building" required>
+          <span ng-show="rForm.building.$touched && rForm.building.$invalid">The building number is required.</span>
+        </p>
+        <p>
+          <label>Street</label> 
+          <input name="street" id="street" class="form-control" type="text" ng-model="rest.address.street" required>
+          <span ng-show="rForm.street.$touched && rForm.street.$invalid">The street name is required.</span>
+        </p>
+        <p>
+          <label>Zipcode</label> 
+          <input name="zip" id="zip" class="form-control" type="text" ng-model="rest.address.zipcode" required>
+          <span ng-show="rForm.zip.$touched && rForm.zip.$invalid">The zipcode is required.</span>
+        </p>
+        <p>
+          <label>Borough</label> 
+          <input name="borough" id="borough" class="form-control" type="text" ng-model="rest.borough" required> 
+          <span ng-show="rForm.borough.$touched && rForm.borough.$invalid">The borough is required.</span>
+        </p>
+        <p>
+          <label>Cuisine</label> 
+          <input name="cuisine" id="cuisine" class="form-control" type="text" ng-model="rest.cuisine" required>
+          <span ng-show="rForm.cuisine.$touched && rForm.cuisine.$invalid">The cuisine is required.</span>
+        </p>
+        <p>
+          <button style="margin-top:20px" class="btn btn-default" ng-disabled="rForm.name.$invalid || rForm.building.$invalid || rForm.street.$invalid || rForm.zip.$invalid || rForm.borough.$invalid || rForm.cuisine.$invalid" ng-click="saveRestaurant(rest)">Save</button>
+          <button style="margin-top:20px" class="btn btn-default" ng-click="back()">Back</button>
+        </p>
+    </form>
   </div>
 </div>
