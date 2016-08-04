@@ -186,8 +186,18 @@ angular.module("contactsApp", ['ngRoute'])
         $scope.restaurants = restaurants.data;
     })
     .controller("NewRestaurantController", function($scope, $location, Restaurants) {
+        $scope.grades = [];
+
         $scope.back = function() {
             $location.path("/restaurants");
+        }
+
+        $scope.addGrade = function() {
+            $scope.grades.push({ 
+                grade: "",
+                score: "",
+                date: ""
+            });
         }
 
         $scope.saveRestaurant = function(rest) {
@@ -214,6 +224,10 @@ angular.module("contactsApp", ['ngRoute'])
         $scope.back = function() {
             $scope.editMode = false;
             $scope.restFormUrl = "";
+        }
+
+        $scope.addGrade = function() {
+            alert("lala");
         }
 
         $scope.saveRestaurant = function(rest) {

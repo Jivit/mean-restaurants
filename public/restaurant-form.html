@@ -37,6 +37,23 @@
           <span ng-show="rForm.cuisine.$touched && rForm.cuisine.$invalid">The cuisine is required.</span>
         </p>
         <p>
+          <div ng-repeat="grade in grades">
+            <p>
+              <label>Grade</label> 
+              <input name="grade" id="grade" class="form-control" type="text" placeholder="Enter a Grade..." ng-model="grade.grade">
+            </p>
+            <p>
+              <label>Score</label> 
+              <input name="score" id="score" class="form-control" type="text" placeholder="Enter a Score..." ng-model="grade.score">
+            </p>
+            <p>
+              <label>Date</label> 
+              <input name="date" id="date" class="form-control" type="text" placeholder="Enter a Date..." ng-model="grade.score">
+            </p>
+          </div>
+          <button style="margin-top:20px" class="btn btn-default" ng-click="addGrade()">Add Grade</button>
+        </p>
+        <p>
           <button style="margin-top:20px" class="btn btn-default" ng-disabled="rForm.name.$invalid || rForm.building.$invalid || rForm.street.$invalid || rForm.zip.$invalid || rForm.borough.$invalid || rForm.cuisine.$invalid" ng-click="saveRestaurant(rest)">Save</button>
           <button style="margin-top:20px" class="btn btn-default" ng-click="back()">Back</button>
         </p>
