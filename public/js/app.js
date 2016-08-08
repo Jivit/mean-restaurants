@@ -1,4 +1,4 @@
-angular.module("contactsApp", ['ngRoute'])
+angular.module("contactsApp", ['ngRoute', 'ngMaterial'])
     .config(function($routeProvider) {
         $routeProvider
             .when("/", {
@@ -186,11 +186,22 @@ angular.module("contactsApp", ['ngRoute'])
         $scope.restaurants = restaurants.data;
     })
     .controller("NewRestaurantController", function($scope, $location, Restaurants) {
+        $scope.grades = [];
+
         $scope.back = function() {
             $location.path("/restaurants");
         }
 
+        $scope.addGrade = function() {
+            $scope.grades.push({ 
+                grade: "",
+                score: "",
+                date: new Date()
+            });
+        }
+
         $scope.saveRestaurant = function(rest) {
+            rest.grades = $scope.grades;
             Restaurants.createRestaurant(rest).then(function(doc) {
                 var restUrl = "/restaurant/" + doc.data._id;
                 $location.path(restUrl);
@@ -202,6 +213,12 @@ angular.module("contactsApp", ['ngRoute'])
     .controller("EditRestaurantController", function($scope, $routeParams, $location, Restaurants) {
         Restaurants.getRestaurant($routeParams.restId).then(function(doc) {
             $scope.rest = doc.data;
+            $scope.grades = $scope.rest.grades;
+
+            for(var i = 0; i < $scope.grades.length; i++) {
+                $scope.grades[i].date = new Date($scope.grades[i].date); 
+            }
+
         }, function(response) {
             alert(response);
         });
@@ -214,6 +231,14 @@ angular.module("contactsApp", ['ngRoute'])
         $scope.back = function() {
             $scope.editMode = false;
             $scope.restFormUrl = "";
+        }
+
+        $scope.addGrade = function() {
+            $scope.grades.push({ 
+                grade: "",
+                score: "",
+                date: new Date()
+            });
         }
 
         $scope.saveRestaurant = function(rest) {
