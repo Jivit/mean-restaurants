@@ -1,4 +1,4 @@
-angular.module("contactsApp", ['ngRoute'])
+angular.module("contactsApp", ['ngRoute', 'ngMaterial'])
     .config(function($routeProvider) {
         $routeProvider
             .when("/", {
@@ -196,7 +196,7 @@ angular.module("contactsApp", ['ngRoute'])
             $scope.grades.push({ 
                 grade: "",
                 score: "",
-                date: ""
+                date: new Date()
             });
         }
 
@@ -214,6 +214,11 @@ angular.module("contactsApp", ['ngRoute'])
         Restaurants.getRestaurant($routeParams.restId).then(function(doc) {
             $scope.rest = doc.data;
             $scope.grades = $scope.rest.grades;
+
+            for(var i = 0; i < $scope.grades.length; i++) {
+                $scope.grades[i].date = new Date($scope.grades[i].date); 
+            }
+
         }, function(response) {
             alert(response);
         });
@@ -232,7 +237,7 @@ angular.module("contactsApp", ['ngRoute'])
             $scope.grades.push({ 
                 grade: "",
                 score: "",
-                date: ""
+                date: new Date()
             });
         }
 
