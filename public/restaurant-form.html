@@ -56,7 +56,7 @@
               <span ng-show="rForm.date.$touched && rForm.date.$invalid">The date is required.</span>
             </p>
           </div>
-          <button style="margin-top:20px" class="btn btn-default" ng-click="addGrade(rest)">Add Grade</button>
+          <button style="margin-top:20px" class="btn btn-default" ng-click="addGrade()">Add Grade</button>
         </p>
         <p>
           <button style="margin-top:20px" class="btn btn-default" ng-disabled="rForm.name.$invalid || rForm.building.$invalid || rForm.street.$invalid || rForm.zip.$invalid || rForm.borough.$invalid || rForm.cuisine.$invalid || rForm.gr.$invalid || rForm.score.$invalid || rForm.date.$invalid" ng-click="saveRestaurant(rest)">Save</button>
