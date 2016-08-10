@@ -37,7 +37,29 @@
           <span ng-show="rForm.cuisine.$touched && rForm.cuisine.$invalid">The cuisine is required.</span>
         </p>
         <p>
-          <button style="margin-top:20px" class="btn btn-default" ng-disabled="rForm.name.$invalid || rForm.building.$invalid || rForm.street.$invalid || rForm.zip.$invalid || rForm.borough.$invalid || rForm.cuisine.$invalid" ng-click="saveRestaurant(rest)">Save</button>
+          <div ng-repeat="grade in grades">
+            <p>
+              <label>Grade</label> 
+              <input name="gr" id="gr" class="form-control" type="text" ng-model="grade.grade" placeholder="Enter a Grade (ie. A, B, C, D)..." required>
+              <span ng-show="rForm.gr.$touched && rForm.gr.$invalid">The grade is required.</span>
+            </p>
+            <p>
+              <label>Score</label> 
+              <input name="score" id="score" class="form-control" type="text" ng-model="grade.score"placeholder="Enter a Score (ie. 1-100)..." required>
+              <span ng-show="rForm.score.$touched && rForm.score.$invalid">The score is required.</span>
+            </p>
+            <p>
+              <label>Date</label> 
+              <md-content>
+                <md-datepicker name="date" ng-model="grade.date" md-placeholder="Enter date"></md-datepicker>
+              </md-content>
+              <span ng-show="rForm.date.$touched && rForm.date.$invalid">The date is required.</span>
+            </p>
+          </div>
+          <button style="margin-top:20px" class="btn btn-default" ng-click="addGrade()">Add Grade</button>
+        </p>
+        <p>
+          <button style="margin-top:20px" class="btn btn-default" ng-disabled="rForm.name.$invalid || rForm.building.$invalid || rForm.street.$invalid || rForm.zip.$invalid || rForm.borough.$invalid || rForm.cuisine.$invalid || rForm.gr.$invalid || rForm.score.$invalid || rForm.date.$invalid" ng-click="saveRestaurant(rest)">Save</button>
           <button style="margin-top:20px" class="btn btn-default" ng-click="back()">Back</button>
         </p>
     </form>
