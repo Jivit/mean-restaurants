@@ -1,4 +1,4 @@
-angular.module("contactsApp", ['ngRoute', 'ngMaterial'])
+angular.module("contactsApp", ['ngRoute', 'ngMaterial', 'ngMap'])
     .config(function($routeProvider) {
         $routeProvider
             .when("/", {
