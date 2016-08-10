@@ -24,7 +24,7 @@
       </ul>
     </p>
     <p ng-if="rest.address.coord">Coordinates: {{ rest.address.coord }} </p>
-      <ng-map center="[{{rest.address.coord[0]}}, {{rest.address.coord[1]}}]"></ng-map>
+      <ng-map center="[{{rest.address.coord[1]}}, {{rest.address.coord[0]}}]"></ng-map>
     <p>
       <button style="margin-top:20px" class="btn btn-default" ng-click="toggleEdit()">Edit</button>
       <a style="margin-top:20px" class="btn btn-default" href="#/restaurants">Back</a>
